@@ -52,6 +52,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             userDetailsService = new JdbcDaoImpl();
             ((JdbcDaoImpl) userDetailsService).setDataSource(dataSource);
         }
+        return userDetailsService;
     }
 
 }

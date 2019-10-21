@@ -10,6 +10,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.BDDMockito.given;
 
@@ -28,7 +31,8 @@ public class UserServiceTest {
 
     @Test
     public void getUserDetails_returnUserInfo() {
-        given(userRepository.findByUserName("disouzaleo")).willReturn(new User("Leonardo", "Rodrigues", "disouzaleo"));
+        given(userRepository.findByUserName("disouzaleo"))
+                .willReturn(new User("Leonardo", "Rodrigues", "disouzaleo"));
 
         User user = userService.getUserDetails("disouzaleo");
 
@@ -44,7 +48,6 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getAllUsers() throws Exception {
-
+    public void getAllUsers_returnsUserList() throws Exception {
     }
 }

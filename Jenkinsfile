@@ -1,8 +1,7 @@
 node {
     stage 'Clone the project'
     git 'https://github.com/codenation-dev/squad-3-ad-java-banco-inter-1.git'
-
-    dir('java-squad-3-banco-inter') {
+    
         stage("Compilation and Analysis") {
             parallel 'Compilation': {
                 sh "./mvnw clean install -DskipTests"
@@ -59,5 +58,4 @@ node {
                 }
             }
         }
-    }
 }

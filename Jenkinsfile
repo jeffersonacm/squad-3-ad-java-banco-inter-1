@@ -4,7 +4,7 @@ node {
     
     stage("Compilation and Analysis") {
         parallel 'Compilation': {
-            sh "./mvnw clean install -DskipTests"
+            sh "mvn clean install -DskipTests"
         }, 'Static Analysis': {
             stage("Checkstyle") {
                 sh "mvn checkstyle:checkstyle"

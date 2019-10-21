@@ -6,9 +6,11 @@ pipeline {
         }
     }
     stages {
-        stage 'Clone the project'
-        git 'https://github.com/codenation-dev/squad-3-ad-java-banco-inter-1.git'
-        
+        stage('Clone the project') {
+            steps {
+                git 'https://github.com/codenation-dev/squad-3-ad-java-banco-inter-1.git'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'

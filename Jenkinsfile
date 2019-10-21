@@ -2,10 +2,10 @@ node {
     stage 'Clone the project'
     git 'https://github.com/codenation-dev/squad-3-ad-java-banco-inter-1.git'
 
-    dir('spring-jenkins-pipeline') {
+    dir('java-squad-3-banco-inter') {
         stage("Compilation and Analysis") {
             parallel 'Compilation': {
-                sh "mvn clean install -DskipTests"
+                sh "./mvnw clean install -DskipTests"
             }, 'Static Analysis': {
                 stage("Checkstyle") {
                     sh "mvn checkstyle:checkstyle"
@@ -26,7 +26,7 @@ node {
             parallel 'Unit tests': {
                 stage("Runing unit tests") {
                     try {
-                        sh "mvn test -Punit"
+                        sh "./mvnw test -Punit"
                     } catch(err) {
                         step([$class: 'JUnitResultArchiver', testResults:
                           '**/target/surefire-reports/TEST-*UnitTest.xml'])
@@ -55,7 +55,7 @@ node {
                 sh "pid=\$(lsof -i:8989 -t); kill -TERM \$pid "
                   + "|| kill -KILL \$pid"
                 withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
-                    sh 'nohup mvn spring-boot:run -Dserver.port=8989 &'
+                    sh 'nohup ./mvnw spring-boot:run -Dserver.port=8989 &'
                 }
             }
         }

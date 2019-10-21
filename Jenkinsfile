@@ -1,14 +1,23 @@
 node {
-    stage 'Clone the project'
-    git 'https://github.com/codenation-dev/squad-3-ad-java-banco-inter-1.git'
-
+    def mvnHome
+    stage('Clone the project and Preparation') { // for display purposes
+        // Get some code from a GitHub repository
+        git 'https://github.com/codenation-dev/squad-3-ad-java-banco-inter-1.git'
+        // Get the Maven tool.
+        // ** NOTE: This 'M3' Maven tool must be configured
+        // **       in the global configuration.           
+        mvnHome = tool 'M3'
+    }
     dir('spring-jenkins-pipeline') {
-        stage("Compilation and Analysis") {
+        withEnv(["MVN_HOME=$mvnHome"]) {
+            stage("Compilation and Analysis") {
+                sh '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean package'
+            }
             parallel 'Compilation': {
                 sh "./mvnw clean install -DskipTests"
             }, 'Static Analysis': {
                 stage("Checkstyle") {
-                    sh "./mvnw checkstyle:checkstyle"
+                    sh '"$MVN_HOME/bin/mvn" checkstyle:checkstyle'
 
                     step([$class: 'CheckStylePublisher',
                       canRunOnFailed: true,
@@ -21,9 +30,9 @@ node {
                 }
             }
         }
-
-        stage("Tests and Deployment") {
-            parallel 'Unit tests': {
+    }
+    stage("Tests and Deployment") {
+        parallel 'Unit tests': {
                 stage("Runing unit tests") {
                     try {
                         sh "./mvnw test -Punit"

@@ -5,10 +5,10 @@ node {
     dir('spring-jenkins-pipeline') {
         stage("Compilation and Analysis") {
             parallel 'Compilation': {
-                sh "./mvnw clean install -DskipTests"
+                sh "mvn clean install -DskipTests"
             }, 'Static Analysis': {
                 stage("Checkstyle") {
-                    sh "./mvnw checkstyle:checkstyle"
+                    sh "mvn checkstyle:checkstyle"
 
                     step([$class: 'CheckStylePublisher',
                       canRunOnFailed: true,
@@ -26,7 +26,7 @@ node {
             parallel 'Unit tests': {
                 stage("Runing unit tests") {
                     try {
-                        sh "./mvnw test -Punit"
+                        sh "mvn test -Punit"
                     } catch(err) {
                         step([$class: 'JUnitResultArchiver', testResults:
                           '**/target/surefire-reports/TEST-*UnitTest.xml'])
@@ -55,7 +55,7 @@ node {
                 sh "pid=\$(lsof -i:8989 -t); kill -TERM \$pid "
                   + "|| kill -KILL \$pid"
                 withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
-                    sh 'nohup ./mvnw spring-boot:run -Dserver.port=8989 &'
+                    sh 'nohup mvn spring-boot:run -Dserver.port=8989 &'
                 }
             }
         }

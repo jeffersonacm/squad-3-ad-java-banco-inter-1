@@ -1,4 +1,11 @@
 node {
+       agent {
+        docker {
+            image 'maven:3-alpine' 
+            args '-v /root/.m2:/root/.m2' 
+        }
+    }
+
     stage 'Clone the project'
     git 'https://github.com/codenation-dev/squad-3-ad-java-banco-inter-1.git'
     

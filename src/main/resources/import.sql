@@ -1,0 +1,1 @@
+insert into api_users values(1, 'disouzaleo', "lrodlima@gmail.com", "asdhfaodshfoiashdf");

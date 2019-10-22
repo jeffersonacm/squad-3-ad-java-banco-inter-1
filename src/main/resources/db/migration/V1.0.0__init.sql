@@ -1,4 +1,4 @@
-CREATE TABLE USER (
+CREATE TABLE USERS (
     id IDENTITY NOT NULL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     email VARCHAR(120) NOT NULL UNIQUE,
@@ -6,5 +6,4 @@ CREATE TABLE USER (
     last_seen TIMESTAMP
 );
 
-CREATE INDEX idx_email
-    ON USER (email);
+CREATE INDEX idx_email ON USERS (email);

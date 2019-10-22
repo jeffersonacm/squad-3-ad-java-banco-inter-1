@@ -4,10 +4,12 @@ import br.com.codenation.errordashboard.domain.User;
 import br.com.codenation.errordashboard.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@RequestMapping("/springjwt")
 public class UserController {
 
     private UserService userService;
@@ -18,6 +20,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{username}")
+    @PreAuthorize("hasAuthority")
     private User getUser(@PathVariable("username") String userName) {
         return userService.getUserDetails(userName);
     }

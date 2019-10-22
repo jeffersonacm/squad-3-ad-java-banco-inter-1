@@ -1,11 +1,9 @@
 package br.com.codenation.errordashboard.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "api_users")
 public class User {
     @Id
     @GeneratedValue

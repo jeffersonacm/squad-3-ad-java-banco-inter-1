@@ -24,7 +24,7 @@ public class UserRepositoryTest {
     private TestEntityManager entityManager;
 
     @Test
-    public void findByUsername_returnsUserDetails() throws Exception{
+    public void findByName_returnsUserDetails() throws Exception{
         User savedUser = entityManager.persistFlushFind(new User(1L, "Leonardo",
                 "lrodlima@gmail.com", "123456", LocalDateTime.now()));
         User user = repository.findByName("Leonardo");

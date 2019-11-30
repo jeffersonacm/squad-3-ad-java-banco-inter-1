@@ -9,6 +9,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -23,10 +25,11 @@ public class UserRepositoryTest {
 
     @Test
     public void findByUsername_returnsUserDetails() throws Exception{
-        User savedUser = entityManager.persistFlushFind(new User("Leonardo", "Rodrigues", "disouzaleo"));
-        User user = repository.findByUserName("disouzaleo");
+        User savedUser = entityManager.persistFlushFind(new User(1L, "Leonardo",
+                "lrodlima@gmail.com", "123456", LocalDateTime.now()));
+        User user = repository.findByName("Leonardo");
 
-        assertThat(user.getFirstName()).isEqualTo(savedUser.getFirstName());
-        assertThat(user.getLastName()).isEqualTo(savedUser.getLastName());
+        assertThat(user.getName()).isEqualTo(savedUser.getName());
+        assertThat(user.getPassword()).isEqualTo(savedUser.getPassword());
     }
 }

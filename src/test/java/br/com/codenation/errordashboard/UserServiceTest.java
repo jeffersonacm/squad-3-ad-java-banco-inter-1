@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.BDDMockito.given;
 
@@ -28,8 +30,9 @@ public class UserServiceTest {
 
     @Test
     public void getUserDetails_returnUserInfo() {
-        given(userRepository.findByName("disouzaleo"))
-                .willReturn(new User(1L, "Leonardo", "disouzaleo"));
+        given(userRepository.findByName("Leonardo"))
+                .willReturn(new User(1L, "Leonardo",
+                        "lrodlima@gmail.com", "123456", LocalDateTime.now()));
 
         User user = userService.getUserDetails("disouzaleo");
 

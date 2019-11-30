@@ -33,8 +33,8 @@ public class ErrorDashboardApplicationTests {
 
 		//assert
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(response.getBody().getFirstName()).isEqualTo("Leonardo");
-		assertThat(response.getBody().getLastName()).isEqualTo("Rodrigues");
+		assertThat(response.getBody().getName()).isEqualTo("Leonardo");
+		assertThat(response.getBody().getEmail()).isEqualTo("lrodlima@gmail.com");
 	}
 
 }

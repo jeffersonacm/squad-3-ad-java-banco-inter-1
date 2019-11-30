@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -29,5 +30,5 @@ public class User {
     private String password;
 
     @CreatedDate
-    private Date createdAt;
+    private LocalDateTime createdAt;
 }

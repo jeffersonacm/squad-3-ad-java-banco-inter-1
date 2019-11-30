@@ -1,14 +1,14 @@
-package br.com.codenation.errordashboard.repository;
+package br.com.codenation.errordashboard.domain.dao;
 
-import br.com.codenation.errordashboard.domain.User;
+import br.com.codenation.errordashboard.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUserName(String userName);
+    User findByName(String name);
+    User findByEmail(String email);
     List<User> findAll();
 }

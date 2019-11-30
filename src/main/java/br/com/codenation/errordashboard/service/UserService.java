@@ -1,12 +1,11 @@
 package br.com.codenation.errordashboard.service;
 
-import br.com.codenation.errordashboard.UserNotFoundException;
-import br.com.codenation.errordashboard.repository.UserRepository;
-import br.com.codenation.errordashboard.domain.User;
+import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
+import br.com.codenation.errordashboard.domain.dao.UserRepository;
+import br.com.codenation.errordashboard.domain.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,8 +19,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUserDetails(String userName) {
-        User user = userRepository.findByUserName(userName);
+    public User getUserDetails(String email) {
+        User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new UserNotFoundException();
         }

@@ -1,7 +1,7 @@
 package br.com.codenation.errordashboard;
 
-import br.com.codenation.errordashboard.domain.User;
-import br.com.codenation.errordashboard.repository.UserRepository;
+import br.com.codenation.errordashboard.domain.entity.User;
+import br.com.codenation.errordashboard.domain.dao.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

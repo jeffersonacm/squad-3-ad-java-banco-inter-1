@@ -1,6 +1,7 @@
-package br.com.codenation.errordashboard;
+package br.com.codenation.errordashboard.endpoints;
 
-import br.com.codenation.errordashboard.domain.User;
+import br.com.codenation.errordashboard.domain.entity.User;
+import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
 import br.com.codenation.errordashboard.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

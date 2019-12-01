@@ -1,7 +1,7 @@
 package br.com.codenation.errordashboard;
 
+import br.com.codenation.errordashboard.domain.dao.UserDAO;
 import br.com.codenation.errordashboard.domain.entity.User;
-import br.com.codenation.errordashboard.domain.dao.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class UserRepositoryTest {
+public class UserDAOTest {
 
     @Autowired
-    private UserRepository repository;
+    private UserDAO userDAO;
 
     @Autowired
     private TestEntityManager entityManager;
@@ -27,7 +27,7 @@ public class UserRepositoryTest {
     public void findByName_returnsUserDetails() throws Exception{
         User savedUser = entityManager.persistFlushFind(new User(1L, "Leonardo",
                 "lrodlima@gmail.com", "123456", LocalDateTime.now()));
-        User user = repository.findByName("Leonardo");
+        User user = userDAO.findByName("Leonardo");
 
         assertThat(user.getName()).isEqualTo(savedUser.getName());
         assertThat(user.getPassword()).isEqualTo(savedUser.getPassword());

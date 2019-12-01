@@ -33,6 +33,9 @@ public class Error {
     @Column(name = "enviroment")
     private String enviromnent;
 
+    @Column(name = "status")
+    private String status;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User userId;

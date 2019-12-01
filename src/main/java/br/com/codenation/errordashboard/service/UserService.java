@@ -1,7 +1,7 @@
 package br.com.codenation.errordashboard.service;
 
 import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
-import br.com.codenation.errordashboard.domain.dao.UserRepository;
+import br.com.codenation.errordashboard.domain.dao.UserDAO;
 import br.com.codenation.errordashboard.domain.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,15 +12,15 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserDAO userDAO;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserDAO userDAO) {
 
-        this.userRepository = userRepository;
+        this.userDAO = userDAO;
     }
 
     public User getUserDetails(String email) {
-        User user = userRepository.findByEmail(email);
+        User user = userDAO.findByEmail(email);
         if (user == null) {
             throw new UserNotFoundException();
         }
@@ -28,6 +28,6 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userDAO.findAll();
     }
 }

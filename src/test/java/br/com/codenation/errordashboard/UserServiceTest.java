@@ -1,8 +1,8 @@
 package br.com.codenation.errordashboard;
 
+import br.com.codenation.errordashboard.domain.dao.UserDAO;
 import br.com.codenation.errordashboard.domain.entity.User;
 import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
-import br.com.codenation.errordashboard.domain.dao.UserRepository;
 import br.com.codenation.errordashboard.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,18 +19,18 @@ import static org.mockito.BDDMockito.given;
 public class UserServiceTest {
 
     @Mock
-    private UserRepository userRepository;
+    private UserDAO userDAO;
 
     private UserService userService;
 
     @Before
     public void setUp() throws Exception {
-        userService = new UserService(userRepository);
+        userService = new UserService(userDAO);
     }
 
     @Test
     public void getUserDetails_returnUserInfo() {
-        given(userRepository.findByName("Leonardo"))
+        given(userDAO.findByName("Leonardo"))
                 .willReturn(new User(1L, "Leonardo",
                         "lrodlima@gmail.com", "123456", LocalDateTime.now()));
 
@@ -41,7 +41,7 @@ public class UserServiceTest {
 
     @Test(expected = UserNotFoundException.class)
     public void getUserDetails_whenUserNotFound() throws Exception {
-        given(userRepository.findByName("disouzaleo")).willReturn(null);
+        given(userDAO.findByName("disouzaleo")).willReturn(null);
 
         userService.getUserDetails("disouzaleo");
     }

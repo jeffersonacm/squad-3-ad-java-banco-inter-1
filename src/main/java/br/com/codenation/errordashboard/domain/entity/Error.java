@@ -8,7 +8,6 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @Builder
@@ -40,6 +39,7 @@ public class Error {
     @JoinColumn(name = "user_id")
     private User userId;
 
+    @Column
     @CreatedDate
     private LocalDateTime createdAt;
 }

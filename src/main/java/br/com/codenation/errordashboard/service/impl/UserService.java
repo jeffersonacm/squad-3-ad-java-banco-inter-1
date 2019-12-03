@@ -1,15 +1,16 @@
-package br.com.codenation.errordashboard.service;
+package br.com.codenation.errordashboard.service.impl;
 
 import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
 import br.com.codenation.errordashboard.domain.dao.UserDAO;
 import br.com.codenation.errordashboard.domain.entity.User;
+import br.com.codenation.errordashboard.service.interfaces.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements UserServiceInterface {
 
     @Autowired
     private UserDAO userDAO;

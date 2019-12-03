@@ -3,7 +3,7 @@ package br.com.codenation.errordashboard;
 import br.com.codenation.errordashboard.domain.entity.User;
 import br.com.codenation.errordashboard.endpoints.UserController;
 import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
-import br.com.codenation.errordashboard.service.UserService;
+import br.com.codenation.errordashboard.service.impl.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

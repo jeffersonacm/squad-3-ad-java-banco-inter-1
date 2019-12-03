@@ -2,7 +2,7 @@ package br.com.codenation.errordashboard.endpoints;
 
 import br.com.codenation.errordashboard.domain.entity.User;
 import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
-import br.com.codenation.errordashboard.service.UserService;
+import br.com.codenation.errordashboard.service.impl.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

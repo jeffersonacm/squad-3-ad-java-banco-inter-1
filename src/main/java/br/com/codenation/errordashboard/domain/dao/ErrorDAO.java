@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ErrorDAO extends JpaRepository<Log, Long> {
-    List<Log> findByEnviromnent(String enviroment);
+
 }

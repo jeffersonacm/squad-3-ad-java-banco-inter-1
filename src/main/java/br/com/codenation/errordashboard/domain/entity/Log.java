@@ -52,6 +52,7 @@ public class Log {
     @NotNull
     private Integer status;
 
+
     private LogId Logid;
 
 

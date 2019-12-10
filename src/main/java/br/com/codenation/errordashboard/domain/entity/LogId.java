@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Embeddable;
 import javax.persistence.EntityListeners;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
@@ -16,11 +17,14 @@ import javax.persistence.ManyToOne;
 @EntityListeners(AuditingEntityListener.class)
 public class LogId {
 
+    @NotNull
     @ManyToOne
     private User user;
 
+
     @ManyToOne
     private Environment environment;
+
 
     @ManyToOne
     private Level level;

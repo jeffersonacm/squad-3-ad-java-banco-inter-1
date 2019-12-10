@@ -26,6 +26,7 @@ public class Level {
     @Size(max = 128)
     private String name;
 
+    @NotNull
     @OneToMany(mappedBy = "Logid.level")
     private List<Log> Log;
 

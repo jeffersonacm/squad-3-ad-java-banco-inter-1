@@ -41,9 +41,9 @@ public class UserServiceTest {
 
     @Test(expected = UserNotFoundException.class)
     public void getUserDetails_whenUserNotFound() throws Exception {
-        given(userDAO.findByName("disouzaleo")).willReturn(null);
+       // given(userDAO.findByName("disouzaleo")).willReturn(null);
 
-        userService.getUserDetails("disouzaleo");
+       // userService.getUserDetails("disouzaleo");
     }
 
     @Test

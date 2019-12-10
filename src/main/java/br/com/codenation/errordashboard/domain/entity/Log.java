@@ -52,9 +52,7 @@ public class Log {
     @NotNull
     private Integer status;
 
-    @EmbeddedId
     private LogId Logid;
-
 
 
 }

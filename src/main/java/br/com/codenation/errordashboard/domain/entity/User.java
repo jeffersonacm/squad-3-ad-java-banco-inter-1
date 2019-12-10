@@ -47,7 +47,7 @@ public class User {
     @OneToMany(mappedBy = "Logid.user")
     private List<Log> Log;
 
-    @OneToMany(mappedBy = "user_role_id.user_role")
+    @OneToMany(mappedBy = "user_role_id.user")
     private List<User_Role> User_Role;
 
 }

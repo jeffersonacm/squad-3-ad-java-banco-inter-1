@@ -26,7 +26,7 @@ public class Role {
     @Size(max = 128)
     private String name;
 
-    @OneToMany(mappedBy = "user_role_id.user_role")
+    @OneToMany(mappedBy = "user_role_id.role")
     private List<User_Role> User_Role;
 
 }

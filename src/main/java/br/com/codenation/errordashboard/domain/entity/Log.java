@@ -9,17 +9,15 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "User")
-public class User {
+@Entity(name = "Log")
+public class Log {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,28 +26,34 @@ public class User {
     @Column
     @NotNull
     @Size(max = 128)
-    private String name;
+    private String title;
 
     @Column
     @NotNull
-    @Size(max = 128)
-    private String email;
+    @Size(max = 1024)
+    private String description;
 
     @Column
     @NotNull
-    @Size(max = 256)
-    private String password_hash;
+    @Size(max = 5096)
+    private String details;
 
     @Column
     @NotNull
-    private LocalDateTime last_seen;
+    @Size(max = 64)
+    private String origin;
 
+    @Column
     @NotNull
-    @OneToMany(mappedBy = "Logid.user")
-    private List<Log> Log;
+    @CreatedDate
+    private Date timestamp;
 
+    @Column
     @NotNull
-    @OneToMany(mappedBy = "user_role_id.user")
-    private List<User_Role> User_Role;
+    private Integer status;
+
+
+    private LogId Logid;
+
 
 }

@@ -22,18 +22,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "Get User by email")
-    @GetMapping(value = "/{email}")
-    private User getUser(@PathVariable("email") String email) {
-        return userService.getUserDetails(email);
-    }
-
     @ApiOperation(value = "Create a new User")
     @PostMapping("/create")
     private ResponseEntity createUser(@Valid @RequestParam String name,
                                       @Valid @RequestParam String email,
-                                      @Valid @RequestParam String password
-                                      ) {
+                                      @Valid @RequestParam String password) {
         UserDTO userDTO = userService.createUser(name, email, password);
 
         return ResponseEntity.ok(userDTO);

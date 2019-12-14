@@ -1,5 +1,7 @@
 package br.com.codenation.errordashboard.config;
 
+import br.com.codenation.errordashboard.service.impl.MyUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,6 +17,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableResourceServer
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
+
     @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
@@ -23,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("leonardo").password("123456").roles("ADMIN");
+        auth.userDetailsService(myUserDetailsService);
     }
 
     @Bean

@@ -53,7 +53,7 @@ public class User {
     private List<Role> roles;
 
     public User(User user) {
-        
+
     }
 
     public static UserDTO toUserDto(User user) {

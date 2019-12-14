@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Service
-public class UserService implements UserServiceInterface {
+public class UserService {
 
     @Autowired
     private UserDAO userDAO;
@@ -28,59 +28,6 @@ public class UserService implements UserServiceInterface {
 
         this.userDAO = userDAO;
     }
-
-    public UserRepositoryUserDetails getUserDetails(String email) {
-        User user = userDAO.findByEmail(email);
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
-        return new UserRepositoryUserDetails(user);
-    }
-
-    private final static class UserRepositoryUserDetails extends User implements UserDetails {
-
-        private static final long serialVersionUID = 1L;
-
-        public UserRepositoryUserDetails(User user) {
-            super(user);
-        }
-
-        @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-            return getRoles();
-        }
-
-        @Override
-        public String getUsername() {
-            return super.getEmail();
-        }
-
-        @Override
-        public boolean isAccountNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isAccountNonLocked() {
-            return true;
-        }
-
-        @Override
-        public boolean isCredentialsNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isEnabled() {
-            return true;
-        }
-
-        @Override
-        public String getPassword() {
-            return super.getPasswordHash();
-        }
-    }
-
     public UserDTO createUser(String name, String email, String password) {
 
         emailValidate(email);

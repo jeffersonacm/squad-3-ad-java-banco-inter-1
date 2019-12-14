@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorDTO {
+public class LogDTO {
     private Long id;
     private String level;
     private String title;
     private String logDescription;
-    private String enviromnent;
+    private String environment;
     private String status;
     private LocalDateTime createdAt;
 }

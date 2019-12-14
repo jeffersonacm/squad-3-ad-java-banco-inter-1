@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ErrorDAO extends JpaRepository<Log, Long> {
+public interface LogDAO extends JpaRepository<Log, Long> {
 
 }

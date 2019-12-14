@@ -28,6 +28,14 @@ public class UserService implements UserServiceInterface {
         return user;
     }
 
+    public User findByEmail(String email) {
+        User user = userDAO.findByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user;
+    }
+
     public List<User> getAllUsers() {
         return userDAO.findAll();
     }

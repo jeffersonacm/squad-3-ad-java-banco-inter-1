@@ -41,9 +41,6 @@ public class User {
     @NotNull
     private LocalDateTime lastSeen;
 
-    @OneToMany(mappedBy = "Logid.user")
-    private List<Log> Log;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",

@@ -9,10 +9,12 @@ import br.com.codenation.errordashboard.mappers.UserMapper;
 import br.com.codenation.errordashboard.service.interfaces.UserServiceInterface;
 import br.com.codenation.errordashboard.utils.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
 
 @Service
 public class UserService implements UserServiceInterface {
@@ -27,16 +29,56 @@ public class UserService implements UserServiceInterface {
         this.userDAO = userDAO;
     }
 
-    public User getUserDetails(String email) {
+    public UserRepositoryUserDetails getUserDetails(String email) {
         User user = userDAO.findByEmail(email);
         if (user == null) {
             throw new UserNotFoundException();
         }
-        return user;
+        return new UserRepositoryUserDetails(user);
     }
 
-    public List<User> getAllUsers() {
-        return userDAO.findAll();
+    private final static class UserRepositoryUserDetails extends User implements UserDetails {
+
+        private static final long serialVersionUID = 1L;
+
+        public UserRepositoryUserDetails(User user) {
+            super(user);
+        }
+
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            return getRoles();
+        }
+
+        @Override
+        public String getUsername() {
+            return super.getEmail();
+        }
+
+        @Override
+        public boolean isAccountNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isAccountNonLocked() {
+            return true;
+        }
+
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return true;
+        }
+
+        @Override
+        public String getPassword() {
+            return super.getPasswordHash();
+        }
     }
 
     public UserDTO createUser(String name, String email, String password) {
@@ -48,8 +90,8 @@ public class UserService implements UserServiceInterface {
         User user = User.builder()
                 .name(name)
                 .email(email)
-                .password_hash(passwordEncoder.hash(password))
-                .last_seen(LocalDateTime.now())
+                .passwordHash(passwordEncoder.hash(password))
+                .lastSeen(LocalDateTime.now())
                 .build();
 
         User userSaved;

@@ -35,24 +35,33 @@ public class User {
     @Column
     @NotNull
     @Size(max = 256)
-    private String password_hash;
+    private String passwordHash;
 
     @Column
     @NotNull
-    private LocalDateTime last_seen;
+    private LocalDateTime lastSeen;
 
     @OneToMany(mappedBy = "Logid.user")
     private List<Log> Log;
 
-    @OneToMany(mappedBy = "user_role_id.user")
-    private List<User_Role> User_Role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
+
+    public User(User user) {
+        
+    }
 
     public static UserDTO toUserDto(User user) {
         return UserDTO.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
-                .last_seen(user.getLast_seen())
+                .lastSeen(user.getLastSeen())
                 .build();
     }
 }

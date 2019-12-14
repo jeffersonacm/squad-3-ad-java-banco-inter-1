@@ -9,8 +9,5 @@ public interface UserServiceInterface {
 
     User getUserDetails(String email);
 
-    List<User> getAllUsers();
-
-//    User createUser(String name, String email, String password);
-
+    UserDTO createUser(String name, String email, String password);
 }

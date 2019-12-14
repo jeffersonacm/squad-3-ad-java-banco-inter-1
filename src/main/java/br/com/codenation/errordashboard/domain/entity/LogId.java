@@ -21,10 +21,8 @@ public class LogId {
     @ManyToOne
     private User user;
 
-
     @ManyToOne
     private Environment environment;
-
 
     @ManyToOne
     private Level level;

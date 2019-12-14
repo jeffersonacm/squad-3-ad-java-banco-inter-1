@@ -7,6 +7,7 @@ import br.com.codenation.errordashboard.domain.dao.UserDAO;
 import br.com.codenation.errordashboard.domain.entity.User;
 import br.com.codenation.errordashboard.mappers.UserMapper;
 import br.com.codenation.errordashboard.service.interfaces.UserServiceInterface;
+import br.com.codenation.errordashboard.utils.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,17 +43,19 @@ public class UserService implements UserServiceInterface {
 
         emailValidate(email);
 
+        PasswordEncoder passwordEncoder = new PasswordEncoder();
+
         User user = User.builder()
                 .name(name)
                 .email(email)
-                .password_hash(password)
+                .password_hash(passwordEncoder.hash(password))
                 .last_seen(LocalDateTime.now())
                 .build();
 
-        User userSave;
-        userSave = userDAO.save(user);
+        User userSaved;
+        userSaved = userDAO.save(user);
 
-        return User.toUserDto(userSave);
+        return User.toUserDto(userSaved);
     }
 
     public void emailValidate(String email) {

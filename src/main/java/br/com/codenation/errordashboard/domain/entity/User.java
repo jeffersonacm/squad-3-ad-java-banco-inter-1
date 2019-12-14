@@ -5,14 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -42,6 +38,7 @@ public class User {
     private String password_hash;
 
     @Column
+    @NotNull
     private LocalDateTime last_seen;
 
     @OneToMany(mappedBy = "Logid.user")

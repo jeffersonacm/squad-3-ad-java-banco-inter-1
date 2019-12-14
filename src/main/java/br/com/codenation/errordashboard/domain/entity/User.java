@@ -1,17 +1,14 @@
 package br.com.codenation.errordashboard.domain.entity;
 
+import br.com.codenation.errordashboard.domain.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -38,18 +35,33 @@ public class User {
     @Column
     @NotNull
     @Size(max = 256)
-    private String password_hash;
+    private String passwordHash;
 
     @Column
     @NotNull
-    private LocalDateTime last_seen;
+    private LocalDateTime lastSeen;
 
-    @NotNull
     @OneToMany(mappedBy = "Logid.user")
     private List<Log> Log;
 
-    @NotNull
-    @OneToMany(mappedBy = "user_role_id.user")
-    private List<User_Role> User_Role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
 
+    public User(User user) {
+        
+    }
+
+    public static UserDTO toUserDto(User user) {
+        return UserDTO.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .lastSeen(user.getLastSeen())
+                .build();
+    }
 }

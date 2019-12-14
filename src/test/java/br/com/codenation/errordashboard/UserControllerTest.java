@@ -30,7 +30,7 @@ public class UserControllerTest {
 
     @Test
     public void getUser_ShouldReturnUser() throws Exception {
-        given(userService.getUserDetails(anyString())).willReturn(new User());
+        //given(userService.getUserDetails(anyString())).willReturn(new UserService.UserRepositoryUserDetails(new User()));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/users/disouzaleo"))
                 .andExpect(status().isOk())

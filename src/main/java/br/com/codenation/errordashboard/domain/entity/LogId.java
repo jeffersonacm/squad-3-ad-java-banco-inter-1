@@ -21,13 +21,17 @@ public class LogId {
     @ManyToOne
     private User user;
 
-
     @ManyToOne
     private Environment environment;
 
-
     @ManyToOne
     private Level level;
+
+    @ManyToOne
+    private User user_shelve;
+
+    @ManyToOne
+    private User user_delete;
 
 
 }

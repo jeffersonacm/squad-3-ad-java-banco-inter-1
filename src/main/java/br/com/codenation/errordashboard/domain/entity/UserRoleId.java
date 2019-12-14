@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 @Embeddable
 @EntityListeners(AuditingEntityListener.class)
-public class User_Role_Id {
+public class UserRoleId {
 
     @ManyToOne
     private User user;

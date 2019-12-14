@@ -57,13 +57,6 @@ public class LogController extends BaseController {
         }
     }
 
-
-
-    @GetMapping(value = "/{email}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    private User getUser(@PathVariable("email") String email) {
-        return userService.getUserDetails(email);
-    }
-
     @Transactional
     @PutMapping(value="/{id}/archive")
     @ResponseStatus(HttpStatus.OK)

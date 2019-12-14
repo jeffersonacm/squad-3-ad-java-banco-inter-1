@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Role")
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +28,11 @@ public class Role {
     private String name;
 
     @NotNull
-    @OneToMany(mappedBy = "user_role_id.role")
-    private List<User_Role> User_Role;
+    @OneToMany(mappedBy = "userRoleId.role")
+    private List<UserRole> userRole;
 
+    @Override
+    public String getAuthority() {
+        return this.name;
+    }
 }

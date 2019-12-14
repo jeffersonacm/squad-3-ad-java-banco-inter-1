@@ -32,4 +32,9 @@ public class UserDAOTest {
         assertThat(user.getName()).isEqualTo(savedUser.getName());
         assertThat(user.getPassword()).isEqualTo(savedUser.getPassword());
     */}
+
+    @Test
+    public void findByEmail_returnUserDetails() {
+        //User
+    }
 }

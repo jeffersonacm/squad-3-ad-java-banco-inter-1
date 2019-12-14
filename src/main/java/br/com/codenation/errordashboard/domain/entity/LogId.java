@@ -27,5 +27,11 @@ public class LogId {
     @ManyToOne
     private Level level;
 
+    @ManyToOne
+    private User user_shelve;
+
+    @ManyToOne
+    private User user_delete;
+
 
 }

@@ -20,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @ApiOperation(value = "Get User by email")
-    @GetMapping(value = "/{email}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/{email}")
     private User getUser(@PathVariable("email") String email) {
         return userService.getUserDetails(email);
     }

@@ -52,6 +52,13 @@ public class Log {
     @NotNull
     private Integer status;
 
+    @Column
+    @NotNull
+    private Date shelve_date;
+
+    @Column
+    @NotNull
+    private Integer delete_date;
 
     private LogId Logid;
 

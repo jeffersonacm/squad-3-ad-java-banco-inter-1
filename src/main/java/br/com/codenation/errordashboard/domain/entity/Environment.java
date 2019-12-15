@@ -26,8 +26,6 @@ public class Environment {
     @Size(max = 128)
     private String name;
 
-    @OneToMany(mappedBy = "Logid.environment")
-    private List<Log> Log;
 
 
 }

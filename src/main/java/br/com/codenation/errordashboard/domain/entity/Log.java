@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -52,15 +54,15 @@ public class Log {
     @NotNull
     private Integer status;
 
-    @Column
-    @NotNull
-    private Date shelve_date;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column
-    @NotNull
-    private Integer delete_date;
+    @ManyToOne
+    @JoinColumn(name = "environment_id")
+    private Environment environment;
 
-    private LogId Logid;
-
-
+    @ManyToOne
+    @JoinColumn(name = "level_id")
+    private Level level;
 }

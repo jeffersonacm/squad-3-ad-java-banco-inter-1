@@ -5,16 +5,11 @@ import br.com.codenation.errordashboard.exceptions.UserEmailExistsException;
 import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
 import br.com.codenation.errordashboard.domain.dao.UserDAO;
 import br.com.codenation.errordashboard.domain.entity.User;
-import br.com.codenation.errordashboard.mappers.UserMapper;
-import br.com.codenation.errordashboard.service.interfaces.UserServiceInterface;
 import br.com.codenation.errordashboard.utils.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 
 @Service
 public class UserService {
@@ -22,7 +17,10 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
-    protected UserMapper userMapper;
+    @Autowired
+    private UserRoleService userRoleService;
+
+    private final Long roledefaultId = 2l;
 
     public UserService(UserDAO userDAO) {
 
@@ -43,6 +41,8 @@ public class UserService {
 
         User userSaved;
         userSaved = userDAO.save(user);
+
+        userRoleService.CreateRole(userSaved.getId(), roledefaultId);
 
         return User.toUserDto(userSaved);
     }

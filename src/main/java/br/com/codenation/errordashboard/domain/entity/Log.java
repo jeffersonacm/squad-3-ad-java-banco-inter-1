@@ -58,7 +58,7 @@ public class Log {
 
     @Column
     @NotNull
-    private Integer delete_date;
+    private Date delete_date;
 
     private LogId Logid;
 

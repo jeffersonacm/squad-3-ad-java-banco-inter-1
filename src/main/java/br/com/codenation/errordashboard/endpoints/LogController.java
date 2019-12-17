@@ -1,6 +1,7 @@
 package br.com.codenation.errordashboard.endpoints;
 
 
+import br.com.codenation.errordashboard.domain.dto.FilterLogDTO;
 import br.com.codenation.errordashboard.domain.dto.LogDTO;
 import br.com.codenation.errordashboard.domain.entity.Log;
 import br.com.codenation.errordashboard.domain.entity.User;
@@ -30,8 +31,8 @@ public class LogController extends BaseController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation("Metódo de criação da Log")
-    @ApiResponses(value={
-            @ApiResponse(code=200, message="Sucessfully retrieved list")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Sucessfully retrieved list")
     })
     public ResponseEntity create(@RequestBody LogDTO log) {
         try {
@@ -42,34 +43,51 @@ public class LogController extends BaseController {
         }
     }
 
-    @DeleteMapping(value="/{id}")
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Metódo de deleção da Log")
-    @ApiResponses(value={
-            @ApiResponse(code=200, message="Sucessfully retrieved list")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Sucessfully retrieved list")
     })
     public ResponseEntity delete(@PathVariable("id") Long id) {
         try {
             User user = getUser();
-            return ResponseEntity.ok().body(logService.delete(id, user));
+            return ResponseEntity.ok().body(logService.delete(id));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
+
+
+    @Transactional
+    @GetMapping(value = "/filter")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation("Metódo de arquivamento da Log")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Sucessfully retrieved list")
+    })
+    public ResponseEntity filter(@RequestBody FilterLogDTO filter) {
+        try {
+            User user = getUser();
+            return null;
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
 
     @Transactional
-    @PutMapping(value="/{id}/archive")
+    @PutMapping(value = "/{id}/archive")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Metódo de arquivamento da Log")
-    @ApiResponses(value={
-            @ApiResponse(code=200, message="Sucessfully retrieved list")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Sucessfully retrieved list")
     })
     public ResponseEntity archive(@PathVariable("id") Long id) {
         try {
-            User user = getUser();
-            return ResponseEntity.ok().body(logService.archive(id, user));
+            return ResponseEntity.ok().body(logService.archive(id));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
+
 }

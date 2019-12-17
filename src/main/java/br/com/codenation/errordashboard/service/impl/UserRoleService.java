@@ -14,10 +14,8 @@ public class UserRoleService {
     @Autowired
     private UserRoleDAO userRoleDAO;
 
-    public UserRole CreateRole(Long userId, Long roleId) {
+    public UserRole save(User user, Role role) {
 
-        User user = User.builder().id(userId).build();
-        Role role = Role.builder().id(roleId).build();
         UserRole userRole = UserRole.builder()
                 .userRoleId(new UserRoleId(user, role))
                 .build();

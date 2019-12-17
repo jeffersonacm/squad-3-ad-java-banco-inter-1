@@ -17,34 +17,20 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
-    @Autowired
-    private UserRoleService userRoleService;
-
-    private final Long roledefaultId = 2l;
-
     public UserService(UserDAO userDAO) {
-
         this.userDAO = userDAO;
     }
-    public UserDTO createUser(String name, String email, String password) {
 
-        emailValidate(email);
+    public User save(User user) {
+
+        emailValidate(user.getEmail());
 
         PasswordEncoder passwordEncoder = new PasswordEncoder();
 
-        User user = User.builder()
-                .name(name)
-                .email(email)
-                .passwordHash(passwordEncoder.hash(password))
-                .lastSeen(LocalDateTime.now())
-                .build();
+        user.setPasswordHash(passwordEncoder.hash(user.getPasswordHash()));
+        user.setLastSeen(LocalDateTime.now());
 
-        User userSaved;
-        userSaved = userDAO.save(user);
-
-        userRoleService.CreateRole(userSaved.getId(), roledefaultId);
-
-        return User.toUserDto(userSaved);
+        return userDAO.save(user);
     }
 
     public void emailValidate(String email) {

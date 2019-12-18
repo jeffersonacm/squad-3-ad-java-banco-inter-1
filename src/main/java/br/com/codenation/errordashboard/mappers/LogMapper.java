@@ -7,8 +7,6 @@ import br.com.codenation.errordashboard.domain.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper(componentModel="spring")
@@ -24,6 +22,17 @@ public interface LogMapper {
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd HH:mm")
     })
     LogDTO map(Log model);
+
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(source = "level", target = "level"),
+            @Mapping(source = "title", target = "title"),
+            @Mapping(source = "logDescription", target = "logDescription"),
+            @Mapping(source = "environment", target = "environment"),
+            @Mapping(source = "status", target = "status"),
+            @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd HH:mm")
+    })
+    Log map(LogDTO model);
 
     List<LogDTO> map(List<Log> logs);
 

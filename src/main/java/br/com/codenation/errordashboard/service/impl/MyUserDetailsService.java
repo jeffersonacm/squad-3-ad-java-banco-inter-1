@@ -29,15 +29,20 @@ public class MyUserDetailsService implements UserDetailsService {
 
     private final static class UserRepositoryUserDetails extends User implements UserDetails {
 
-        private static final long serialVersionUID = 1L;
+        private static final Long serialVersionUID = 1L;
 
-        public UserRepositoryUserDetails(User user) {
+        private UserRepositoryUserDetails(User user) {
             super(user);
         }
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
             return getRoles();
+        }
+
+        @Override
+        public String getPassword() {
+            return getPasswordHash();
         }
 
         @Override
@@ -63,11 +68,6 @@ public class MyUserDetailsService implements UserDetailsService {
         @Override
         public boolean isEnabled() {
             return true;
-        }
-
-        @Override
-        public String getPassword() {
-            return super.getPasswordHash();
         }
     }
 }

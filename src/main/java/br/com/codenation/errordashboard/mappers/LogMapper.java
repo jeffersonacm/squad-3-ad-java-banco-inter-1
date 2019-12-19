@@ -10,6 +10,8 @@ import java.util.List;
 @Mapper(componentModel="spring")
 public interface LogMapper {
 
+    Log toModel(LogDTO dto);
+
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "level.getName()", target = "level"),
@@ -20,7 +22,7 @@ public interface LogMapper {
             @Mapping(source = "frequency", target = "frequency"),
             @Mapping(source = "timestamp", target = "timestamp", dateFormat = "yyyy-MM-dd HH:mm")
     })
-    LogDTO map(Log model);
+    LogDTO toDTO(Log model);
 
     @Mappings({
             @Mapping(source = "id", target = "id"),

@@ -50,7 +50,11 @@ public class User {
     private List<Role> roles;
 
     public User(User user) {
-
+        super();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.passwordHash = user.getPasswordHash();
+        this.roles = user.getRoles();
     }
 
     public static UserDTO toUserDto(User user) {

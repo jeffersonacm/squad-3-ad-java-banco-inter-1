@@ -21,6 +21,28 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    MyUserDetailsService myUserDetailsService;
+
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(myUserDetailsService);
+    }
+
+
+
+    /*
+    @Autowired
     private MyUserDetailsService myUserDetailsService;
 
     @Bean
@@ -35,19 +57,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/user");
+        web.ignoring().antMatchers("/users");
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/user")
+                .antMatchers(HttpMethod.POST, "/users")
                 .permitAll()
                 .anyRequest().authenticated();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
-    }
+        return NoOpPasswordEncoder.getInstance();*/
 }
+

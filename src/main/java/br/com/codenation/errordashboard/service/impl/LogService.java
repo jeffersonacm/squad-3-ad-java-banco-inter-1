@@ -11,7 +11,9 @@ import br.com.codenation.errordashboard.service.interfaces.LogServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,8 +31,9 @@ public class LogService implements LogServiceInterface {
     public LogDTO create(LogDTO logDTO, User user) {
 
         Log log = mapper.map(logDTO);
+        log.setTimestamp(new Date());
         log = logDAO.save(log);
-        return mapper.map(log);
+        return null;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class LogService implements LogServiceInterface {
     @Override
     public LogDTO getById(Long id){
         Log log = logDAO.getOne(id);
-        return mapper.map(log);
+        return null;
     }
 
     @Override

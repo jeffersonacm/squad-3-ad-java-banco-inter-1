@@ -40,4 +40,8 @@ public class UserService {
             throw new UserEmailExistsException();
         }
     }
+
+    public User findByEmail(String email){
+        return userDAO.findByEmail(email);
+    }
 }

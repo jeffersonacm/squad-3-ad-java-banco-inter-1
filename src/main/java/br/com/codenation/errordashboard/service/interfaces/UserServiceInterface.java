@@ -7,5 +7,8 @@ public interface UserServiceInterface {
 
     User getUserDetails(String email);
 
+    UserDTO createUser(String name, String email, String password);
+
+    User findByEmail(String email);
     UserDTO save(User user);
 }

@@ -29,7 +29,7 @@ public class UserController {
     private final Long roledefaultId = 2l;
 
     @ApiOperation(value = "Create a new User")
-    @PostMapping(value = "/create", consumes = "application/json")
+    @PostMapping(consumes = "application/json")
     private ResponseEntity createUser(@RequestBody User user) {
         User userSaved = userService.save(user);
         userRoleService.save(userSaved, Role.builder().id(roledefaultId).build());

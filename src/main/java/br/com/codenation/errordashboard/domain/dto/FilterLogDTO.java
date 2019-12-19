@@ -4,15 +4,16 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+
 @Data
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
-    private Long id;
-    private String name;
-    private String email;
-    private LocalDateTime lastSeen;
+public class FilterLogDTO {
+    private Long environment;
+    private String orderBy;
+    private String keyword;
+    private String typeKeyword;
 }

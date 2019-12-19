@@ -79,6 +79,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>2.3.5</version>
+        </dependency>
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
@@ -112,7 +118,7 @@
                         jdbc:mysql://localhost:3306/errorcenter?serverTimezone=UTC
                     </url>
                     <username>root</username>
-                    <password>root123</password>
+                    <password>root</password>
                     <rollbackCount>1</rollbackCount>
                 </configuration>
             </plugin>

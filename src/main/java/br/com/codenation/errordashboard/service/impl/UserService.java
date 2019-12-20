@@ -6,8 +6,8 @@ import br.com.codenation.errordashboard.exceptions.UserEmailExistsException;
 import br.com.codenation.errordashboard.domain.dao.UserDAO;
 import br.com.codenation.errordashboard.domain.entity.User;
 import br.com.codenation.errordashboard.service.interfaces.UserServiceInterface;
-import br.com.codenation.errordashboard.utils.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +18,9 @@ public class UserService implements UserServiceInterface {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserService(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -54,8 +57,7 @@ public class UserService implements UserServiceInterface {
     }
 
     public String hashPassword(String password) {
-        PasswordEncoder passwordEncoder = new PasswordEncoder();
-        return passwordEncoder.hash(password);
+        return passwordEncoder.encode(password);
     }
 
     public String generateToken() {

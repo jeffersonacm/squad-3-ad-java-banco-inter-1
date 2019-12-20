@@ -54,8 +54,13 @@ public class User {
     )
     private List<Role> roles;
 
-    public User(User user) {
-
+    public User (User user) {
+        super();
+        this.name = user.getName();
+        this.passwordHash = user.getPasswordHash();
+        this.token = user.getToken();
+        this.lastSeen = user.getLastSeen();
+        this.roles = user.getRoles();
     }
 
     public static UserDTO toUserDto(User user) {

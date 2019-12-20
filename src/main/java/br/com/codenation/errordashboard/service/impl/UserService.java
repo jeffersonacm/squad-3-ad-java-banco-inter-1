@@ -2,10 +2,7 @@ package br.com.codenation.errordashboard.service.impl;
 
 import br.com.codenation.errordashboard.domain.dto.RecoveryPasswordDTO;
 import br.com.codenation.errordashboard.domain.dto.UserDTO;
-import br.com.codenation.errordashboard.domain.entity.MailRecovery;
-import br.com.codenation.errordashboard.domain.enums.MailStatus;
 import br.com.codenation.errordashboard.exceptions.UserEmailExistsException;
-import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
 import br.com.codenation.errordashboard.domain.dao.UserDAO;
 import br.com.codenation.errordashboard.domain.entity.User;
 import br.com.codenation.errordashboard.service.interfaces.UserServiceInterface;
@@ -14,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserServiceInterface {
@@ -30,6 +28,7 @@ public class UserService implements UserServiceInterface {
         emailValidate(user.getEmail());
         user.setPasswordHash(hashPassword(user.getPasswordHash()));
         user.setLastSeen(LocalDateTime.now());
+        user.setToken(generateToken()+generateToken());
 
         return userDAO.save(user);
     }
@@ -57,6 +56,10 @@ public class UserService implements UserServiceInterface {
     public String hashPassword(String password) {
         PasswordEncoder passwordEncoder = new PasswordEncoder();
         return passwordEncoder.hash(password);
+    }
+
+    public String generateToken() {
+        return UUID.randomUUID().toString().replace("-", "");
     }
 
 }

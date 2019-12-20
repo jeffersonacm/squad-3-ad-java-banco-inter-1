@@ -39,6 +39,11 @@ public class User {
 
     @Column
     @NotNull
+    @Size(max = 128)
+    private String token;
+
+    @Column
+    @NotNull
     private LocalDateTime lastSeen;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -58,6 +63,7 @@ public class User {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .token(user.getToken())
                 .lastSeen(user.getLastSeen())
                 .build();
     }

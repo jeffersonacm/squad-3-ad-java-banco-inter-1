@@ -39,6 +39,11 @@ public class User {
 
     @Column
     @NotNull
+    @Size(max = 128)
+    private String token;
+
+    @Column
+    @NotNull
     private LocalDateTime lastSeen;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -49,11 +54,12 @@ public class User {
     )
     private List<Role> roles;
 
-    public User(User user) {
+    public User (User user) {
         super();
         this.name = user.getName();
-        this.email = user.getEmail();
         this.passwordHash = user.getPasswordHash();
+        this.token = user.getToken();
+        this.lastSeen = user.getLastSeen();
         this.roles = user.getRoles();
     }
 
@@ -62,6 +68,7 @@ public class User {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .token(user.getToken())
                 .lastSeen(user.getLastSeen())
                 .build();
     }

@@ -8,9 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
@@ -27,9 +25,9 @@ public class MailRecovery {
     @ManyToOne
     private User user;
 
-    @Column
+    @Column(name = "security_hash")
     @NotNull
-    private String security_hash;
+    private String securityHash;
 
     @Column
     @NotNull
@@ -37,6 +35,5 @@ public class MailRecovery {
 
     @CreatedDate
     private LocalDateTime createdAt;
-
 
 }

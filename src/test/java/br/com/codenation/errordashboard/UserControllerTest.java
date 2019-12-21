@@ -1,7 +1,10 @@
 package br.com.codenation.errordashboard;
 
-import br.com.codenation.errordashboard.domain.User;
-import br.com.codenation.errordashboard.service.UserService;
+import br.com.codenation.errordashboard.domain.entity.User;
+import br.com.codenation.errordashboard.endpoints.UserController;
+import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
+import br.com.codenation.errordashboard.service.impl.MyUserDetailsService;
+import br.com.codenation.errordashboard.service.impl.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +27,11 @@ public class UserControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService userService;
+    private MyUserDetailsService myUserDetailsService;
 
     @Test
     public void getUser_ShouldReturnUser() throws Exception {
-        given(userService.getUserDetails(anyString())).willReturn(new User("Leonardo", "Rodrigues", "disouzaleo"));
+        //given(userService.getUserDetails(anyString())).willReturn(new UserService.UserRepositoryUserDetails(new User()));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/users/disouzaleo"))
                 .andExpect(status().isOk())
@@ -39,7 +42,7 @@ public class UserControllerTest {
 
     @Test
     public void getUser_notFound() throws Exception {
-        given(userService.getUserDetails(anyString())).willThrow(new UserNotFoundException());
+        //given(myUserDetailsService.loadUserByUsername(anyString())).willThrow(new UserNotFoundException());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/users/disouzaleo"))
                 .andExpect(status().isNotFound());

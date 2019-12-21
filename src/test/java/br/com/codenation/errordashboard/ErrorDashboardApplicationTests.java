@@ -1,6 +1,6 @@
 package br.com.codenation.errordashboard;
 
-import br.com.codenation.errordashboard.domain.User;
+import br.com.codenation.errordashboard.domain.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +33,8 @@ public class ErrorDashboardApplicationTests {
 
 		//assert
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(response.getBody().getFirstName()).isEqualTo("Leonardo");
-		assertThat(response.getBody().getLastName()).isEqualTo("Rodrigues");
+		assertThat(response.getBody().getName()).isEqualTo("Leonardo");
+		assertThat(response.getBody().getEmail()).isEqualTo("lrodlima@gmail.com");
 	}
 
 }

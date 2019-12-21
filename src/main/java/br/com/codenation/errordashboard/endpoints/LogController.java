@@ -51,7 +51,8 @@ public class LogController extends BaseController {
     })
     public ResponseEntity delete(@PathVariable("id") Long id) {
         try {
-            return ResponseEntity.ok().body(logService.delete(id));
+            logService.delete(id);
+            return ResponseEntity.ok().body("Log deletado com sucesso!");
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
@@ -61,7 +62,7 @@ public class LogController extends BaseController {
     @Transactional
     @GetMapping(value = "/filter")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation("Metódo de arquivamento da Log")
+    @ApiOperation("Metódo de filtro da Log")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Sucessfully retrieved list")
     })
@@ -79,11 +80,28 @@ public class LogController extends BaseController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Metódo de arquivamento da Log")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Sucessfully retrieved list")
+            @ApiResponse(code = 200, message = "Sucessfully archived log")
     })
     public ResponseEntity archive(@PathVariable("id") Long id) {
         try {
-            return ResponseEntity.ok().body(logService.archive(id));
+            logService.archive(id);
+            return ResponseEntity.ok().body("Log arquivado com sucesso!");
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
+
+    @Transactional
+    @GetMapping(value = "")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation("Metódo de listagem da Log")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Sucessfully retrieved list")
+    })
+    public ResponseEntity getAll() {
+        try {
+
+            return ResponseEntity.ok().body(logService.getAll());
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }

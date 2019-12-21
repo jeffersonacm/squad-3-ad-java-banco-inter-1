@@ -12,9 +12,9 @@ import java.util.List;
 public interface LogServiceInterface {
 
     LogDTO create(LogDTO logDTO, User user);
-    Boolean delete(Long id);
-    Boolean archive(Long id);
+    void delete(Long id);
+    void archive(Long id);
     List<LogDTO> filter(FilterLogDTO filter);
     LogDTO getById(Long id);
-
+    List<LogDTO> getAll();
 }

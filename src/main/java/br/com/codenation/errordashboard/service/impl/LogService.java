@@ -1,16 +1,18 @@
 package br.com.codenation.errordashboard.service.impl;
 
+import br.com.codenation.errordashboard.domain.dao.EnvironmentDAO;
+import br.com.codenation.errordashboard.domain.dao.LevelDAO;
 import br.com.codenation.errordashboard.domain.dao.LogDAO;
-import br.com.codenation.errordashboard.domain.dao.UserDAO;
 import br.com.codenation.errordashboard.domain.dto.FilterLogDTO;
 import br.com.codenation.errordashboard.domain.dto.LogDTO;
+import br.com.codenation.errordashboard.domain.entity.Environment;
+import br.com.codenation.errordashboard.domain.entity.Level;
 import br.com.codenation.errordashboard.domain.entity.Log;
 import br.com.codenation.errordashboard.domain.entity.User;
 import br.com.codenation.errordashboard.service.interfaces.LogServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,29 +25,58 @@ public class LogService implements LogServiceInterface {
     @Autowired
     private LogDAO logDAO;
 
+    @Autowired
+    private EnvironmentDAO environmentDAO;
+
+    @Autowired
+    private LevelDAO levelDAO;
+
+
     @Override
     @Transactional
     public LogDTO create(LogDTO logDTO, User user) {
 
         Log log = LogVOToEntity(logDTO);
         log.setTimestamp(new Date());
+
+        //Level
+        Level level = levelDAO.getByName(logDTO.getLevel());
+        if(level == null)
+        {
+            level = new Level();
+            level.setName(logDTO.getLevel());
+            level = levelDAO.save(level);
+
+        }
+
+        log.setLevel(level);
+
+        //Environment
+        Environment environment = environmentDAO.getByName(logDTO.getEnvironment());
+        if(environment == null)
+        {
+            environment = new Environment();
+            environment.setName(logDTO.getLevel());
+            environment = environmentDAO.save(environment);
+
+        }
+        log.setEnvironment(environment);
+        log.setUser(user);
         log = logDAO.save(log);
         return EntityToLogVO(log);
     }
 
     @Override
-    public Boolean archive(Long id) {
+    public void archive(Long id) {
         Log log = logDAO.getOne(id);
         log.setStatus(2);
         logDAO.save(log);
-        return true;
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public void delete(Long id) {
         Log log = logDAO.getOne(id);
         logDAO.delete(log);
-        return true;
     }
 
     @Override
@@ -72,9 +103,28 @@ public class LogService implements LogServiceInterface {
         } else if (filter.getOrderBy().equals("F")) {
             orderBy = "frequency";
         }
+        ArrayList<LogDTO> logsDTO= new ArrayList<LogDTO>();
+       // List<Log> logs = logDAO.filter(filter.getEnvironment(), orderBy, typeKeyword, filter.getKeyword());
+        List<Log> logs = logDAO.findAll();
+        for (Log log:
+             logs) {
+           LogDTO logDTO =  EntityToLogVO(log);
+            logsDTO.add(logDTO);
+        }
+        return logsDTO;
+    }
 
-        //ArrayList<Log> logs = logDAO.filter(filter.getEnvironment(), orderBy, typeKeyword, filter.getKeyword());
-        return null;
+    @Override
+    public List<LogDTO> getAll() {
+
+        ArrayList<LogDTO> logsDTO= new ArrayList<LogDTO>();
+        List<Log> logs = logDAO.findAll();
+        for (Log log:
+                logs) {
+            LogDTO logDTO =  EntityToLogVO(log);
+            logsDTO.add(logDTO);
+        }
+        return logsDTO;
     }
 
     public LogDTO EntityToLogVO(Log log) {
@@ -89,6 +139,7 @@ public class LogService implements LogServiceInterface {
                 .createdAt(log.getTimestamp())
                 .details(log.getDetails())
                 .origin(log.getOrigin())
+                .frequency(log.getFrequency())
                 .build();
     }
 
@@ -98,6 +149,8 @@ public class LogService implements LogServiceInterface {
                 .title(logDTO.getTitle())
                 .description(logDTO.getLogDescription())
                 .details(logDTO.getDetails())
-                .origin(logDTO.getOrigin()).build();
+                .origin(logDTO.getOrigin())
+                .status(logDTO.getStatus())
+                .frequency(logDTO.getFrequency()).build();
     }
 }

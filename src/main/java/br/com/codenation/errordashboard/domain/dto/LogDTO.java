@@ -21,4 +21,5 @@ public class LogDTO {
     private Date createdAt;
     private String details;
     private String origin;
+    private String frequency;
 }

@@ -2,7 +2,6 @@ package br.com.codenation.errordashboard.service.impl;
 
 import br.com.codenation.errordashboard.domain.dao.UserDAO;
 import br.com.codenation.errordashboard.domain.entity.User;
-import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,33 +15,40 @@ import java.util.Collection;
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userDAO.findByEmail(email);
-        if (user == null) {
-            throw new UserNotFoundException();
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userDAO.findByEmail(username);
+
+        if(user == null){
+            throw new UsernameNotFoundException("Usuário não encontrado");
         }
+
         return new UserRepositoryUserDetails(user);
     }
 
     private final static class UserRepositoryUserDetails extends User implements UserDetails {
 
-        private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1;
 
-        public UserRepositoryUserDetails(User user) {
+        private UserRepositoryUserDetails(User user){
             super(user);
         }
 
         @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-            return getRoles();
+        public String getUsername() {
+            return this.getEmail();
         }
 
         @Override
-        public String getUsername() {
-            return super.getEmail();
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            return this.getRoles();
+        }
+
+        @Override
+        public String getPassword() {
+            return super.getPasswordHash();
         }
 
         @Override
@@ -64,10 +70,6 @@ public class MyUserDetailsService implements UserDetailsService {
         public boolean isEnabled() {
             return true;
         }
-
-        @Override
-        public String getPassword() {
-            return super.getPasswordHash();
-        }
     }
+
 }

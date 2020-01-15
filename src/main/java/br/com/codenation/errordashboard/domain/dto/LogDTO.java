@@ -1,21 +1,25 @@
 package br.com.codenation.errordashboard.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import java.time.LocalDateTime;
+import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Data
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorDTO {
+public class LogDTO {
     private Long id;
     private String level;
     private String title;
     private String logDescription;
-    private String enviromnent;
-    private String status;
-    private LocalDateTime createdAt;
+    private String environment;
+    private Integer status;
+    private Date createdAt;
+    private String details;
+    private String origin;
+    private String frequency;
 }

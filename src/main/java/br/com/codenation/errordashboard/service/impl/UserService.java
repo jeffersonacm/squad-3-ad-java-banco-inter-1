@@ -1,50 +1,39 @@
 package br.com.codenation.errordashboard.service.impl;
 
+import br.com.codenation.errordashboard.domain.dto.RecoveryPasswordDTO;
 import br.com.codenation.errordashboard.domain.dto.UserDTO;
 import br.com.codenation.errordashboard.exceptions.UserEmailExistsException;
-import br.com.codenation.errordashboard.exceptions.UserNotFoundException;
 import br.com.codenation.errordashboard.domain.dao.UserDAO;
 import br.com.codenation.errordashboard.domain.entity.User;
-import br.com.codenation.errordashboard.mappers.UserMapper;
 import br.com.codenation.errordashboard.service.interfaces.UserServiceInterface;
-import br.com.codenation.errordashboard.utils.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserService implements UserServiceInterface {
 
     @Autowired
     private UserDAO userDAO;
 
-    protected UserMapper userMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserService(UserDAO userDAO) {
-
         this.userDAO = userDAO;
     }
-    public UserDTO createUser(String name, String email, String password) {
 
-        emailValidate(email);
+    public User save(User user) {
 
-        PasswordEncoder passwordEncoder = new PasswordEncoder();
+        emailValidate(user.getEmail());
+        user.setPasswordHash(hashPassword(user.getPasswordHash()));
+        user.setLastSeen(LocalDateTime.now());
+        user.setToken(generateToken()+generateToken());
 
-        User user = User.builder()
-                .name(name)
-                .email(email)
-                .passwordHash(passwordEncoder.hash(password))
-                .lastSeen(LocalDateTime.now())
-                .build();
-
-        User userSaved;
-        userSaved = userDAO.save(user);
-
-        return User.toUserDto(userSaved);
+        return userDAO.save(user);
     }
 
     public void emailValidate(String email) {
@@ -54,4 +43,25 @@ public class UserService {
             throw new UserEmailExistsException();
         }
     }
+
+    public User findByEmail(String email){
+        return userDAO.findByEmail(email);
+    }
+
+    public UserDTO changePassword(RecoveryPasswordDTO recoveryPasswordDTO, User user) {
+        user.setPasswordHash(hashPassword(recoveryPasswordDTO.getPassword()));
+
+        User userSaved = userDAO.save(user);
+
+        return User.toUserDto(userSaved);
+    }
+
+    public String hashPassword(String password) {
+        return passwordEncoder.encode(password);
+    }
+
+    public String generateToken() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
+
 }

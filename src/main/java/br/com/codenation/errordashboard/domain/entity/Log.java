@@ -54,6 +54,11 @@ public class Log {
     @NotNull
     private Integer status;
 
+    @Column
+    @NotNull
+    private String frequency;
+
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -66,3 +71,5 @@ public class Log {
     @JoinColumn(name = "level_id")
     private Level level;
 }
+
+

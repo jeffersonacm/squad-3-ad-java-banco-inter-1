@@ -1,0 +1,8 @@
+<filter>
+    <filter-name>simpleCorsFilter</filter-name>
+    <filter-class>br.com.codenation.errordashboard.config.CORSFilter</filter-class>
+</filter>
+<filter-mapping>
+<filter-name>simpleCorsFilter</filter-name>
+<url-pattern>/*</url-pattern>
+</filter-mapping>

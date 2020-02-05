@@ -16,34 +16,13 @@ import java.util.Collections;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig extends WebMvcConfigurationSupport {
-
+public class SwaggerConfig {
     @Bean
-    public Docket errorApi() {
-        return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("br.com.codenation.errordashboard"))
-                .paths(PathSelectors.regex("/.*"))
-                .build()
-                .apiInfo(metaData());
-    }
-
-    private ApiInfo metaData() {
-        return new ApiInfo("Error Dashboard API",
-                "Codenation Final Project - An Error Dashboard API REST Application made with Spring Boot",
-                "1.0.0-RELEASE",
-                "Terms of service",
-                new Contact("Leonardo Rodrigues", "", "lrodlim@gmail.com"),
-                "Apache License Version 2.0",
-                "https://www.apache.org/licenses/LICENSE-2.0\"",
-                Collections.emptyList());
-    }
-
-    @Override
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
     }
 }

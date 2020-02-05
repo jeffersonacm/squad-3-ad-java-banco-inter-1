@@ -3,7 +3,6 @@ package br.com.codenation.errordashboard.config;
 import br.com.codenation.errordashboard.service.impl.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,6 +21,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyUserDetailsService myUserDetailsService;
 
+    private static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**",
+            "/users",
+            "/mailRecovery"
+    };
+
     @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
@@ -34,15 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/users", "/mailRecovery");
+        web.ignoring().antMatchers(AUTH_WHITELIST);
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/users")
-                .permitAll()
-                .anyRequest().authenticated();
+        http.cors();
     }
 
     @Bean
